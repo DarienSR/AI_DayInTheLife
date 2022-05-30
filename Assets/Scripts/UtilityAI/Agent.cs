@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Core;
 /* 
 
     This file contains all the decision logic for choosing and scoring actions.
@@ -13,18 +13,18 @@ namespace UtilityAI
     {
         public bool finishedDecidingAction { get; set; } // when set to true it indicates an action has been chosen, will allow us to restart the process for choosing another action.
         public Action chosenAction { get; set; } // action with the highest utility and is currently being carried out
-        private AgentController agent; // holds all the agent information, like movement, stats, etc.
+        private AgentController agentController; // holds all the agentController information, like movement, stats, etc.
 
         // Start is called before the first frame update
         void Start()
         {
-            agent = GetComponent<AgentController>();
+            agentController = GetComponent<AgentController>();
         }
 
         // Update is called once per frame
         void Update()
         {
-            if(chosenAction is null) ChooseAction(agent.availableActions); // begins process of choosing an action
+            if(chosenAction is null) ChooseAction(agentController.availableActions); // begins process of choosing an action
         }
 
         // Iterate through all the available actions and return the action with the highest utility 
@@ -53,7 +53,7 @@ namespace UtilityAI
             float score = 1f;
             for(int i = 0; i < action.considerations.Length; i++)
             {
-                score *= action.considerations[i].ScoreConsideration(agent); // get the consideration score and multiply it to the overall score.
+                score *= action.considerations[i].ScoreConsideration(agentController); // get the consideration score and multiply it to the overall score.
                 if(score == 0) 
                 {
                     action.score = 0;

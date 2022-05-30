@@ -4,16 +4,18 @@ using UnityEngine;
 using Core;
 namespace UtilityAI.actions
 {
-    [CreateAssetMenu(fileName = "Hunt", menuName = "UtilityAI/Actions/Hunt")]
-    public class Hunt : Action
-    {
-        public Hunt()
+    [CreateAssetMenu(fileName = "Sleep", menuName = "UtilityAI/Actions/Sleep")]
+    public class Sleep : Action
+    {   
+        public Sleep()
         {
-            Name = "Hunt";
-        } 
+            Name = "Sleeping";
+        }
+
         public override void PerformAction(AgentController agent)
         {
-            agent.DoHunt(2);
+            agent.DoSleep(3);
         }
     }
 }   
+

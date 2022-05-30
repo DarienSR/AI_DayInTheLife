@@ -9,16 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a76cde9267884b5428ffbba00b7c8a92, type: 3}
-  m_Name: HungerConsideration
+  m_Script: {fileID: 11500000, guid: b1aad37d3a8d18548829f0553c2584c0, type: 3}
+  m_Name: EnergyConsideration
   m_EditorClassIdentifier: 
   consideration: 
   responseCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 0
+      time: 0.008331299
+      value: 0.99056625
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -26,28 +26,19 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.5410438
-      value: 0.174613
-      inSlope: 1.090421
-      outSlope: 1.090421
+      time: 0.5117044
+      value: 0.43179598
+      inSlope: -1.5141431
+      outSlope: -1.5141431
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.70043373
-      value: 0.41758958
-      inSlope: 1.8628427
-      outSlope: 1.8628427
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 2
-      outSlope: 2
+      time: 1.0026512
+      value: 0
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0

@@ -4,17 +4,17 @@ using UnityEngine;
 using Core;
 namespace UtilityAI.actions
 {
-    [CreateAssetMenu(fileName = "Eat", menuName = "UtilityAI/Actions/Eat")]
-    public class Eat : Action
-    {
-        public Eat()
+    [CreateAssetMenu(fileName = "ChopWood", menuName = "UtilityAI/Actions/Chop Wood")]
+    public class ChopWood : Action
+    {   
+        public ChopWood()
         {
-            Name = "Eat";
+            Name = "Chopping Wood";
         }
 
         public override void PerformAction(AgentController agent)
         {
-            agent.DoEat(2);
+            agent.DoChopWood(3);
         }
     }
 }   

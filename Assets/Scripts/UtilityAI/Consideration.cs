@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Core;
 /*
     All considerations will inherit this base class.
 */

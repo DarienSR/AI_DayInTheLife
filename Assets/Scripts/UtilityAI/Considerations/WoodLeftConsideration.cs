@@ -4,13 +4,13 @@ using UnityEngine;
 using Core;
 namespace UtilityAI.Considerations
 {
-    [CreateAssetMenu(fileName = "HungerConsideration", menuName = "UtilityAI/Considerations/Hunger Consideration")]
-    public class HungerConsideration : Consideration
+    [CreateAssetMenu(fileName = "WoodLeftConsideration", menuName = "UtilityAI/Considerations/Wood Left Consideration")]
+    public class WoodLeftConsideration : Consideration
     {
         [SerializeField] private AnimationCurve responseCurve;
         public override float ScoreConsideration(AgentController agent)
         {
-            score = responseCurve.Evaluate(Mathf.Clamp01(agent.stats.hunger / 100f));
+            score = responseCurve.Evaluate(Mathf.Clamp01(agent.stats.woodAvailable / 100f));
             return score;
         }   
     }
