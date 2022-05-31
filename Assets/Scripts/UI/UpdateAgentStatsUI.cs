@@ -16,17 +16,17 @@ namespace UI
         }
         public void UpdateStatsText(int energy, int hunger)
         {
-            statsText.text = $"Energy: { energy } ||||  Hunger: { hunger }";
+            statsText.text = $"Energy: { energy } \n Hunger: { hunger }";
         }
 
         public void UpdateInventoryText(int food, int wood)
         {
-            inventoryText.text = $"Food: { food } |||| Wood: { wood }";
+            inventoryText.text = $"Food: { food } \n  Wood: { wood }";
         }
 
         public void UpdateBestAction(string action)
         {
-            bestActionText.text = $"Best Action: { action }";
+            bestActionText.text = $"Action: { action }";
         }
     }
 }
