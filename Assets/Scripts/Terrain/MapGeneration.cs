@@ -6,7 +6,7 @@ namespace Environment
 {
     public class MapGeneration : MonoBehaviour
     {
-        private Tile tile;
+        public GameObject tilePrefab;
         public int rows = 10;
         public int cols = 10;
         
@@ -25,7 +25,10 @@ namespace Environment
             {
                 for(int j = 0; j < cols; j++)
                 {
-                    Tile tile = new Tile(i, 1f, j);
+                    GameObject go = (GameObject) Instantiate(tilePrefab);
+
+                    Tile tile = go.GetComponent<Tile>();
+                    tile.UpdatePosition(i, 1f, j);
                     map[i, j] = tile;
                 }
             }

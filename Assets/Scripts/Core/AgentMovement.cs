@@ -1,18 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class AgentMovement : MonoBehaviour
+using UnityEngine.AI;
+using Environment;
+namespace Core
 {
-    // Start is called before the first frame update
-    void Start()
+    public class AgentMovement : MonoBehaviour
     {
-        
-    }
+        public GameObject environment;
+        private MapGeneration _map;
+        float speed = 1f;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private Vector3 newPos;
+
+        // Start is called before the first frame update
+        void Start()
+        {   
+            _map = environment.GetComponent<MapGeneration>();
+            // MoveTo(_map.map[25, 25].transform.position);
+        }
+
+        void Update()
+        {
+           transform.position = Vector3.MoveTowards(transform.position, newPos, Time.deltaTime * speed);
+        }
+
+        public void MoveTo(Vector3 newPosition)
+        {
+            newPos = newPosition;
+        }
     }
 }
