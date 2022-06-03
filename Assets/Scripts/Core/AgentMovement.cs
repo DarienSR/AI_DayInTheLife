@@ -8,8 +8,8 @@ namespace Core
     public class AgentMovement : MonoBehaviour
     {
         public GameObject environment;
-        private MapGeneration _map;
-        float speed = 1f;
+        public MapGeneration _map;
+        float speed = 20f;
 
         private Vector3 newPos;
 

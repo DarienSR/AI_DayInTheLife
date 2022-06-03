@@ -13,12 +13,15 @@ namespace Core
         public Agent agent { get; set; }
         public AgentStats stats { get; set; }
         public UpdateAgentStatsUI ui { get; set; }
+        public AgentMovement move { get; set; }
         public Action[] availableActions;
+
 
         void Start()
         {
             agent = GetComponent<Agent>();
             stats = GetComponent<AgentStats>();
+            move = GetComponent<AgentMovement>();
             ui = GetComponent<UpdateAgentStatsUI>();
         }
 
@@ -37,6 +40,8 @@ namespace Core
             ui.UpdateStatsText(stats.energy, stats.hunger);
             ui.UpdateInventoryText(stats.meatQuantity, stats.woodAvailable);
             ui.UpdateBestAction(agent.chosenAction.Name);
+            // just testing movement. Realistically, we want to move, reach destination, then execute destination. Select next action, move, reach, execute, etc.
+            move.MoveTo(move._map.map[Random.Range(0, 50), Random.Range(0, 50)].transform.position);
             agent.ChooseAction(availableActions);
         }
 

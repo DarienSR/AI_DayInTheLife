@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3690250719916066346
+--- !u!1 &6641823808375158363
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,47 +8,47 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2825814370782493082}
-  - component: {fileID: 5414059176213433914}
-  - component: {fileID: 6554645333436483102}
-  - component: {fileID: 4002330843261632231}
-  - component: {fileID: 3896007085486559911}
+  - component: {fileID: 3948502714056096869}
+  - component: {fileID: 6779499866195814018}
+  - component: {fileID: 1655238501195913611}
+  - component: {fileID: 5785954281042441918}
+  - component: {fileID: 4397273665574461642}
   m_Layer: 0
-  m_Name: Tile
+  m_Name: Waypoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2825814370782493082
+--- !u!4 &3948502714056096869
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3690250719916066346}
+  m_GameObject: {fileID: 6641823808375158363}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 0.3, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &5414059176213433914
+--- !u!33 &6779499866195814018
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3690250719916066346}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &6554645333436483102
+  m_GameObject: {fileID: 6641823808375158363}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &1655238501195913611
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3690250719916066346}
+  m_GameObject: {fileID: 6641823808375158363}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 191e7debe1f483d4886a3c7e86cc92ce, type: 2}
+  - {fileID: 2100000, guid: 459affb697e3fbc468f7ffa07fad008c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,34 +83,29 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &4002330843261632231
-MeshCollider:
+--- !u!136 &5785954281042441918
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3690250719916066346}
+  m_GameObject: {fileID: 6641823808375158363}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &3896007085486559911
+  m_Radius: 0.5000001
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &4397273665574461642
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3690250719916066346}
+  m_GameObject: {fileID: 6641823808375158363}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc16461e6afabb74ab64a046c52ba7c6, type: 3}
+  m_Script: {fileID: 11500000, guid: 2f4a4cdd7e4d9ba4296e5a65f2a40abd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grassTexture: {fileID: 2100000, guid: 191e7debe1f483d4886a3c7e86cc92ce, type: 2}
-  waterTexture: {fileID: 2100000, guid: c77e389a6e3279a40aeafc44492e5641, type: 2}
-  huntingTexture: {fileID: 2100000, guid: d772ab7166fb7474f93103f48cef94a3, type: 2}
-  townTexture: {fileID: 2100000, guid: a80840cb04904e4439eaf588189e57b4, type: 2}
-  tileType: 0
