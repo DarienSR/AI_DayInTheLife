@@ -9,7 +9,7 @@ namespace Core
     public class AgentMovement : MonoBehaviour
     {
         public GameObject environment;
-        float speed = 20f;
+        float speed = 2f;
         private Agent agent;
         private Vector3 newPos;
         public EnvironmentController environmentController;

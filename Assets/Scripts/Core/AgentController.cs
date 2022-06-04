@@ -34,7 +34,6 @@ namespace Core
                 // update UI 
                 ui.UpdateStatsText(stats.energy, stats.hunger);
                 ui.UpdateInventoryText(stats.meatQuantity, stats.woodAvailable);
-                ui.UpdateBestAction(agent.chosenAction.Name);
                 agent.chosenAction.PerformAction(this); // pass in this controller
             }
         }
@@ -52,6 +51,7 @@ namespace Core
 
         IEnumerator EatCoroutine(int time)
         {
+            ui.UpdateBestAction(agent.chosenAction.Name);
             int counter = time;
             while (counter > 0)
             {
@@ -73,6 +73,17 @@ namespace Core
 
         IEnumerator HuntCoroutine(int time)
         {
+            ui.UpdateBestAction("Travelling");
+            // wait until we have reached the hunting zone.
+            Vector3 destination = move.environmentController.FindWaypoint(Waypoint.WaypointType.HUNTING).GetPosition();
+            while(agent.transform.position != destination)
+            {
+                yield return null;
+            }
+            ui.UpdateBestAction(agent.chosenAction.Name);
+
+
+            // we have now reached the hunting zone. We can perform the action.
             int counter = time;
             while (counter > 0)
             {
@@ -94,6 +105,15 @@ namespace Core
 
         IEnumerator ChopWoodCoroutine(int time)
         {
+            ui.UpdateBestAction("Travelling");
+            // wait until we have reached the hunting zone.
+            Vector3 destination = move.environmentController.FindWaypoint(Waypoint.WaypointType.TREE).GetPosition();
+            while(agent.transform.position != destination)
+            {
+                yield return null;
+            }
+            ui.UpdateBestAction(agent.chosenAction.Name);
+
             int counter = time;
             while (counter > 0)
             {
@@ -114,6 +134,15 @@ namespace Core
 
         IEnumerator SleepCoroutine(int time)
         {
+            ui.UpdateBestAction("Travelling");
+            // wait until we have reached the hunting zone.
+            Vector3 destination = move.environmentController.FindWaypoint(Waypoint.WaypointType.TOWN).GetPosition();
+            while(agent.transform.position != destination)
+            {
+                yield return null;
+            }
+            ui.UpdateBestAction(agent.chosenAction.Name);
+
             int counter = time;
             while (counter > 0)
             {
