@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UtilityAI;
+using Environment;
 using UI;
 /*
     Contains the Agent controls.
@@ -30,6 +31,10 @@ namespace Core
             if(agent.finishedDecidingAction)
             {
                 agent.finishedDecidingAction = false;
+                // update UI 
+                ui.UpdateStatsText(stats.energy, stats.hunger);
+                ui.UpdateInventoryText(stats.meatQuantity, stats.woodAvailable);
+                ui.UpdateBestAction(agent.chosenAction.Name);
                 agent.chosenAction.PerformAction(this); // pass in this controller
             }
         }
@@ -37,11 +42,6 @@ namespace Core
         // Action has finished executing. Choose next action.
         public void OnFinishedAction()
         {
-            ui.UpdateStatsText(stats.energy, stats.hunger);
-            ui.UpdateInventoryText(stats.meatQuantity, stats.woodAvailable);
-            ui.UpdateBestAction(agent.chosenAction.Name);
-            // just testing movement. Realistically, we want to move, reach destination, then execute destination. Select next action, move, reach, execute, etc.
-            move.MoveTo(move._map.map[Random.Range(0, 50), Random.Range(0, 50)].transform.position);
             agent.ChooseAction(availableActions);
         }
 
@@ -58,7 +58,6 @@ namespace Core
                 yield return new WaitForSeconds(1);
                 counter--;
             }
-            Debug.Log("I am eating.");
             stats.UpdateMeatQuantity(-3);
             stats.UpdateHunger(-100);
             stats.UpdateEnergy(5);
@@ -68,6 +67,7 @@ namespace Core
 
         public void DoHunt(int time)
         {
+            move.MoveTo(Waypoint.WaypointType.HUNTING); // waypoint we want to move to;
             StartCoroutine(HuntCoroutine(time));
         }
 
@@ -79,7 +79,6 @@ namespace Core
                 yield return new WaitForSeconds(1);
                 counter--;
             }
-            Debug.Log("I am hunting.");
             stats.UpdateMeatQuantity(10);
             stats.UpdateHunger(50);
             stats.UpdateEnergy(-60);
@@ -89,6 +88,7 @@ namespace Core
 
         public void DoChopWood(int time)
         {
+            move.MoveTo(Waypoint.WaypointType.TREE); // waypoint we want to move to;
             StartCoroutine(ChopWoodCoroutine(time));
         }
 
@@ -100,7 +100,6 @@ namespace Core
                 yield return new WaitForSeconds(1);
                 counter--;
             }
-            Debug.Log("I am chopping wood");
             stats.UpdateEnergy(-30);
             stats.UpdateHunger(30);
             stats.UpdateWoodQuantity(10);
@@ -109,6 +108,7 @@ namespace Core
 
         public void DoSleep(int time)
         {
+            move.MoveTo(Waypoint.WaypointType.TOWN); // waypoint we want to move to;
             StartCoroutine(SleepCoroutine(time));
         }
 
@@ -120,7 +120,6 @@ namespace Core
                 yield return new WaitForSeconds(1);
                 counter--;
             }
-            Debug.Log("I am sleeping.");
             stats.UpdateEnergy(100);
             stats.UpdateHunger(30);
             OnFinishedAction();

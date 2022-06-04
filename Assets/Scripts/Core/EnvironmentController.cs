@@ -9,25 +9,24 @@ namespace Environment
         public List<Waypoint> waypoints;
 
         // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
             waypoints = new List<Waypoint>();
         }
 
-        // Update is called once per frame
-        void Update()
+        public void AddWaypoint(Waypoint waypoint)
         {
-            
+            waypoints.Add(waypoint);
         }
 
-        public void AddWaypoint(Waypoint waypoint, Waypoint.WaypointType type, (int, int) pos)
+        public Waypoint FindWaypoint(Waypoint.WaypointType type)
         {
-            waypoint.xPos = pos.Item1;
-            waypoint.zPos = pos.Item2;
-            waypoint.SetPosition();
-            waypoint.waypointType = type;
-
-            waypoints.Add(waypoint);
+            foreach(Waypoint waypoint in waypoints)
+            {
+                if(waypoint.waypointType == type)
+                    return waypoint;
+            }
+            return null;
         }
     }
 }

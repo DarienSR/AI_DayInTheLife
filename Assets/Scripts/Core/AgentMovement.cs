@@ -2,22 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UtilityAI;
 using Environment;
 namespace Core
 {
     public class AgentMovement : MonoBehaviour
     {
         public GameObject environment;
-        public MapGeneration _map;
         float speed = 20f;
-
+        private Agent agent;
         private Vector3 newPos;
+        public EnvironmentController environmentController;
 
         // Start is called before the first frame update
         void Start()
         {   
-            _map = environment.GetComponent<MapGeneration>();
-            // MoveTo(_map.map[25, 25].transform.position);
+            environmentController = environment.GetComponent<EnvironmentController>();
+            agent = GetComponent<Agent>();
         }
 
         void Update()
@@ -25,9 +26,16 @@ namespace Core
            transform.position = Vector3.MoveTowards(transform.position, newPos, Time.deltaTime * speed);
         }
 
-        public void MoveTo(Vector3 newPosition)
+        public void MoveTo(Waypoint.WaypointType type)
         {
-            newPos = newPosition;
+            Waypoint waypoint = environmentController.FindWaypoint(type);
+            if(waypoint == null) 
+            {
+                newPos = agent.transform.position; // don't move anywhere (give current location)
+                return;
+            }
+
+            newPos = waypoint.GetPosition();
         }
     }
 }

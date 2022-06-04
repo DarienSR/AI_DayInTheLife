@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Core;
+using Environment; // access waypoint
 /*
     This is the base class for all actions.
 */
@@ -10,6 +11,7 @@ namespace UtilityAI
     public abstract class Action : ScriptableObject
     {
         public string Name;
+
         private float _score;
         public float score
         {
