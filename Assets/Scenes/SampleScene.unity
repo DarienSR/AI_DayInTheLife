@@ -220,6 +220,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 3690250719916066346, guid: da238533dbc27314fb0d6e6b1858eb1d, type: 3}
   waypointTilePrefab: {fileID: 6641823808375158363, guid: 93afac7abd6d4c548b6c59a2742b19bd, type: 3}
+  rows: 100
+  cols: 100
 --- !u!4 &835325848
 Transform:
   m_ObjectHideFlags: 0

@@ -15,8 +15,8 @@ namespace Environment
     {
         public GameObject tilePrefab;
         public GameObject waypointTilePrefab;
-        private int rows = 100;
-        private int cols = 100;
+        public int rows = 100; 
+        public int cols = 100; 
 
         EnvironmentController environmentController;
         
@@ -28,11 +28,8 @@ namespace Environment
             map = new Tile[rows, cols];
             environmentController = GetComponent<EnvironmentController>();
             GenerateMap();
-
-            GenerateZone(Tile.TileType.TOWN,  Waypoint.WaypointType.TOWN, 20, 30);
-            GenerateZone(Tile.TileType.WATER,  Waypoint.WaypointType.WATER);
-            GenerateZone(Tile.TileType.HUNTING,  Waypoint.WaypointType.HUNTING);
-
+            GenerateTown();
+            GenerateZone();
         }
 
         private void GenerateMap()
@@ -52,33 +49,48 @@ namespace Environment
             }
         }   
 
-        // Function to generate the zones for various tile types
-        private void GenerateZone(Tile.TileType tileType, Waypoint.WaypointType waypointType, int lowerLimit = 10, int upperLimit = 21)
+        void GenerateTown()
         {
-            // choose waypointTile randomly
-            Tile waypointTile = waypointTile = map[UnityEngine.Random.Range(0, rows - 1), UnityEngine.Random.Range(0, rows - 1)];  
-
-            int size = UnityEngine.Random.Range(lowerLimit, upperLimit);
-            for(int i = 0; i < size; i ++)
+            Tile waypointTile = map[rows / 3, cols / 3];  
+            for(int i = 0; i < 10; i ++)
             {
-                for(int j = 0; j < size; j++)
+                for(int j = 0; j < 10; j++)
                 {
-                    try
-                    {
-                        if(map[waypointTile.xPos + i, waypointTile.zPos + j].tileType == Tile.TileType.GRASS) // only convert grass tiles
-                            map[waypointTile.xPos + i, waypointTile.zPos + j].UpdateTileType(tileType);
-                    }
-                    catch(Exception e)
-                    {
-
-                    }
+                    map[waypointTile.xPos + i, waypointTile.zPos + j].UpdateTileType(Tile.TileType.TOWN);
                 }
             }
             // add waypointTile
             GameObject waypointGO = (GameObject)Instantiate(waypointTilePrefab);
             Waypoint waypoint = waypointGO.GetComponent<Waypoint>();
             // add waypoint to waypoint collection
-            environmentController.AddWaypoint(waypoint, waypointType, (waypointTile.xPos + (size / 2),  waypointTile.zPos + (size / 2)));
+            environmentController.AddWaypoint(waypoint, Waypoint.WaypointType.TOWN, (waypointTile.xPos + (rows / 2),  waypointTile.zPos + (cols / 2)));
+        }
+
+        // Function to generate the zones for various tile types
+        private void GenerateZone()
+        {            
+            Noise noise = new Noise();
+            float[,] noiseMap = noise.CalcNoise(rows);
+            for(int i = 0; i < rows; i ++)
+            {
+                for(int j = 0; j < rows; j++)
+                {
+                    if(map[i, j].tileType == Tile.TileType.TOWN) break; // do not replace the town
+                    Tile.TileType type = DetermineType(noiseMap[i, j]);
+                    map[i, j].UpdateTileType(type);             
+                }
+            }
+        }
+
+        public Tile.TileType DetermineType(float noiseValue)
+        {
+            if(noiseValue < 0.3f)
+                return Tile.TileType.WATER;    
+            else if(noiseValue < 0.5f)            
+                return Tile.TileType.HUNTING;
+            else   
+                return Tile.TileType.GRASS;
+            
         }
     }
 }
