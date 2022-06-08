@@ -8,10 +8,15 @@ namespace Environment
     {
         public enum WaypointType 
         {
-            WATER,
-            HUNTING,
-            TOWN,
-            TREE
+            BED,
+            CHAIR, // for reading
+            TOILET,
+            SINK,
+            FRIDGE,
+            COUCH_LAYDOWN,
+            COUCH_WATCHTV,
+            WORK
+    
         }
 
         public WaypointType waypointType;

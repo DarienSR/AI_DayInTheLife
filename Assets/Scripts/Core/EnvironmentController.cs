@@ -24,8 +24,11 @@ namespace Environment
             foreach(Waypoint waypoint in waypoints)
             {
                 if(waypoint.waypointType == type)
+                {
                     return waypoint;
+                }
             }
+            Debug.Log("No waypoint returned.");
             return null;
         }
     }

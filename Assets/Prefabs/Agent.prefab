@@ -32,7 +32,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3922431565939127946}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3922431566481286586}
@@ -130,7 +130,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6d65166df97504b4aab5dff48170d570, type: 2}
   - {fileID: 11400000, guid: 1c82f71a32018b249bf0d6e66f289b7b, type: 2}
   - {fileID: 11400000, guid: 9b62fabb589a50340a023a241034c868, type: 2}
-  - {fileID: 11400000, guid: c368cfded69583a48b95c0d1f84b7626, type: 2}
+  - {fileID: 0}
 --- !u!114 &872188779101763379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,12 +143,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8103e4babb3ec184b8aa28a92ef53649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _meatAvailable: 0
   timeToDecreaseHunger: 5
   _hunger: 0
-  _woodAvailable: 0
   _energy: 0
-  _temperature: 0
+  _money: 0
+  _stress: 0
+  _bowels: 0
 --- !u!114 &986273485398411155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,7 +178,6 @@ MonoBehaviour:
   statsText: {fileID: 0}
   inventoryText: {fileID: 0}
   bestActionText: {fileID: 0}
-  all: {fileID: 0}
 --- !u!1 &3922431566481286590
 GameObject:
   m_ObjectHideFlags: 0

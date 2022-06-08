@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e938162ce81d9c42b644cda461fa7bf, type: 3}
+  m_Name: Read
+  m_EditorClassIdentifier: 
+  Name: Read
+  considerations:
+  - {fileID: 11400000, guid: 1b80a325ae2cb0b458d09f5d428c7697, type: 2}
+  - {fileID: 11400000, guid: d584990bcd0e2e943bc7287d3b6ff75d, type: 2}

@@ -6,15 +6,6 @@ namespace Core
 {
     public class AgentStats : MonoBehaviour
     {
-        [SerializeField]  private int _meatAvailable; 
-        public int meatQuantity
-        {
-            get { return _meatAvailable; }
-            set 
-            {
-                _meatAvailable = value;
-            }
-        }
 
         [SerializeField] private float timeToDecreaseHunger = 5f; // every x seconds, decrease hunger
         private float timeLeftHunger; // keep track of time to know when to decrease hunger
@@ -28,51 +19,57 @@ namespace Core
             }
         }
 
-        [SerializeField] private int _woodAvailable;
-        public int woodAvailable
-        {
-            get {  return _hunger; }
-            set 
-            {
-                _woodAvailable = value;
-            }
-        }
-
         [SerializeField] private int _energy;
         public int energy
         {
-            get {  return _hunger; }
+            get {  return _energy; }
             set 
             {
                 _energy = value;
             }
         }
 
-        [SerializeField] private int _temperature;
-        public int temperature
+        [SerializeField] private int _money;
+        public int money
         {
-            get {  return _temperature; }
+            get {  return _money; }
             set 
             {
-                _temperature = value;
+                _money = value;
+            }
+        }
+
+        [SerializeField] private int _stress;
+        public int stress
+        {
+            get {  return _stress; }
+            set 
+            {
+                _stress = value;
+            }
+        }
+
+        [SerializeField] private int _bowels;
+        public int bowels
+        {
+            get {  return _bowels; }
+            set 
+            {
+                _bowels = value;
             }
         }
 
         // Initialize stats to starting values
         void Start()
         {
-            meatQuantity = Random.Range(0, 10);
             hunger = Random.Range(0, 100);
             energy = Random.Range(0, 100);
-            woodAvailable = Random.Range(0, 10);
+            stress = Random.Range(0, 100);
+            bowels = Random.Range(0, 100);
+            money  =  Random.Range(0, 100);
         }
 
-        // Meat Quantity modified when hunting (increase) or eating (decreasing)
-        public void UpdateMeatQuantity(int quantity)
-        {
-            if(meatQuantity + quantity <= 0) return;
-            meatQuantity += quantity;
-        }
+
 
         // Direct function to update hunger an action is carried out (i.e. eating, physical exertion, etc)
         public void UpdateHunger(int level)
@@ -90,14 +87,24 @@ namespace Core
             energy += energyLevels;
         }
 
-        public void UpdateTemperature(int temp)
+        public void UpdateBowels(int bowelsLevel)
         {
-            temperature += temp;
+            if(bowels + bowelsLevel <= 0)
+            {
+                bowels = 0;
+                return;
+            }
+            bowels += bowelsLevel;
         }
 
-        public void UpdateWoodQuantity(int amount)
+        public void UpdateStress(int stressLevel)
         {
-            woodAvailable += amount;
+            if(stress + stressLevel <= 0)
+            {
+                stress = 0;
+                return;
+            }
+            stress += stressLevel;
         }
     }
 }

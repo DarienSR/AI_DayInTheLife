@@ -31,11 +31,13 @@ namespace Core
             Waypoint waypoint = environmentController.FindWaypoint(type);
             if(waypoint == null) 
             {
+                Debug.Log("No waypoint found.");
                 newPos = agent.transform.position; // don't move anywhere (give current location)
                 return;
             }
 
             newPos = waypoint.GetPosition();
+            Debug.Log(newPos);
         }
     }
 }
