@@ -37,7 +37,6 @@ namespace Core
             }
 
             newPos = waypoint.GetPosition();
-            Debug.Log(newPos);
         }
     }
 }

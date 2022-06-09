@@ -167,7 +167,6 @@ namespace Core
             ui.UpdateBestAction("Travelling: " + agent.chosenAction.name +".");
             // wait until we have reached the hunting zone.
             Vector3 destination = move.environmentController.FindWaypoint(Waypoint.WaypointType.COUCH_WATCHTV).GetPosition();
-            Debug.Log(destination);
             while(agent.transform.position != destination)
             {
                 yield return null;
