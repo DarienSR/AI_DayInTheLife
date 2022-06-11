@@ -160,9 +160,9 @@ namespace Core
         {
             move.MoveTo(Waypoint.WaypointType.COUCH_WATCHTV); // waypoint we want to move to
             StartCoroutine(WatchTVCoroutine(time));
-        }
+        } 
 
-       IEnumerator WatchTVCoroutine(int time)
+        IEnumerator WatchTVCoroutine(int time)
         {
             ui.UpdateBestAction("Travelling: " + agent.chosenAction.name +".");
             // wait until we have reached the hunting zone.
@@ -251,3 +251,9 @@ namespace Core
 }
 
 
+// StartCoroutine(PerformCoroutine(action.actionElapsedTime))
+
+// PerformCoroutine()
+    // waits for action.ElapsedTime, then calls action.PerformAction()
+
+// Goal of the above is cleann up the AgentController and contain action within action
