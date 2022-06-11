@@ -250,10 +250,3 @@ namespace Core
     }
 }
 
-
-// StartCoroutine(PerformCoroutine(action.actionElapsedTime))
-
-// PerformCoroutine()
-    // waits for action.ElapsedTime, then calls action.PerformAction()
-
-// Goal of the above is cleann up the AgentController and contain action within action

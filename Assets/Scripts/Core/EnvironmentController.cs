@@ -7,6 +7,7 @@ namespace Environment
     public class EnvironmentController : MonoBehaviour
     {
         public List<Waypoint> waypoints;
+        [SerializeField] public ParticleSystem rain;
         private enum WeatherStates
         {
             Sunny,
@@ -22,7 +23,7 @@ namespace Environment
 
         private int currentState = 0; // current state is 0.
 
-        int dayLength = 2;
+        int dayLength = 4;
         // Start is called before the first frame update
         void Awake()
         {
@@ -63,7 +64,10 @@ namespace Environment
                 {
                     currentWeather = currentWeather == WeatherStates.Sunny ? WeatherStates.Rainy : WeatherStates.Sunny;
                 }
-                Debug.Log(currentWeather);
+                if(currentWeather == WeatherStates.Rainy) 
+                    rain.Play();
+                else 
+                    rain.Stop();
             }
         }
 

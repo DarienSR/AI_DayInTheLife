@@ -332,6 +332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waypoints: []
+  rain: {fileID: 1434768356}
 --- !u!1 &182685748
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,6 +428,33 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 182685748}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &214291587 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3922431565939127946, guid: 7b68ad5c5a72d8b4f93f0f95ed9e8ce5, type: 3}
+  m_PrefabInstance: {fileID: 1904595407}
+  m_PrefabAsset: {fileID: 0}
+--- !u!195 &214291588
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214291587}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &215383015
 GameObject:
   m_ObjectHideFlags: 0
@@ -1905,7 +1933,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!199 &1434768355
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -7554,17 +7582,21 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2130077887312212272, guid: 7b68ad5c5a72d8b4f93f0f95ed9e8ce5, type: 3}
-      propertyPath: availableActions.Array.data[1]
+      propertyPath: availableActions.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: 9b62fabb589a50340a023a241034c868, type: 2}
     - target: {fileID: 2130077887312212272, guid: 7b68ad5c5a72d8b4f93f0f95ed9e8ce5, type: 3}
+      propertyPath: availableActions.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 6d65166df97504b4aab5dff48170d570, type: 2}
+    - target: {fileID: 2130077887312212272, guid: 7b68ad5c5a72d8b4f93f0f95ed9e8ce5, type: 3}
       propertyPath: availableActions.Array.data[2]
       value: 
-      objectReference: {fileID: 11400000, guid: adfa8f1f8da4d9e4ab8bf22aadd8a36f, type: 2}
+      objectReference: {fileID: 11400000, guid: 6c3fcdb5f11560c40ba652d0b913b64a, type: 2}
     - target: {fileID: 2130077887312212272, guid: 7b68ad5c5a72d8b4f93f0f95ed9e8ce5, type: 3}
       propertyPath: availableActions.Array.data[3]
       value: 
-      objectReference: {fileID: 11400000, guid: 6c3fcdb5f11560c40ba652d0b913b64a, type: 2}
+      objectReference: {fileID: 11400000, guid: adfa8f1f8da4d9e4ab8bf22aadd8a36f, type: 2}
     - target: {fileID: 2130077887312212272, guid: 7b68ad5c5a72d8b4f93f0f95ed9e8ce5, type: 3}
       propertyPath: availableActions.Array.data[4]
       value: 
