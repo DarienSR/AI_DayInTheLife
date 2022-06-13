@@ -30,13 +30,7 @@ namespace UtilityAI
         }
 
         // abstract class will have to be over-written by the action. 
-        public abstract void PerformAction(AgentController agent); 
-        public virtual void Perform(AgentController agent)
-        {
-            return;
-        }
-
-        
+        public abstract void PerformAction(AgentController agent);         
     }
 }
 

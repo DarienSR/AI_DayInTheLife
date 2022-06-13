@@ -34,7 +34,8 @@ namespace Environment
 
         public Vector3 GetPosition()
         {
-            return this.transform.position;
+            // return the position of the waypoint, but set the Y value (waypoint height) to 1. This prevents the agent from moving off the ground towards the physical location of the waypoint. 
+            return new Vector3(this.transform.position.x, 1f, this.transform.position.z);
         }
 
         public void SetWaypointColor()

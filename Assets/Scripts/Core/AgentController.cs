@@ -5,17 +5,17 @@ using UtilityAI;
 using Environment;
 using UI;
 /*
-    Contains the Agent controls.
+    Outlines the various actions and general agent movement.
 */
 namespace Core
 {
     public class AgentController : MonoBehaviour
     {
-        public Agent agent { get; set; }
-        public AgentStats stats { get; set; }
-        public UpdateAgentStatsUI ui { get; set; }
+        public Agent agent { get; set; } // reference to the agent so we can access the functions to evaluate which actions we should take
+        public AgentStats stats { get; set; } // information relating to the agents vitals/stats to give guidance on which action we should perform
+        public UpdateAgentStatsUI ui { get; set; } // allow us to update the agents UI, which shows us agent/environmental stats and current action
         public AgentMovement move { get; set; }
-        public Action[] availableActions;
+        public Action[] availableActions; // list of actions available to choose from
 
 
         void Start()
@@ -26,53 +26,56 @@ namespace Core
             ui = GetComponent<UpdateAgentStatsUI>();
         }
 
+
         void Update()
         {
+            // check to see if we have just finished executing an action. If so, the action will set the finishedDecidingAction to 'true' and then calls the OnFinishedAction function
+            //     which chooses the next action to execute. 
             if(agent.finishedDecidingAction)
             {
-                agent.finishedDecidingAction = false;
-                // update UI 
-                ui.UpdateStatsText(stats.energy, stats.hunger);
-                agent.chosenAction.PerformAction(this); // pass in this controller
+                agent.finishedDecidingAction = false; // flag so we can execute the chosen action 
+                ui.UpdateStatsText(stats.energy, stats.hunger); // update UI with current stats 
+                agent.chosenAction.PerformAction(this); // execute the chosen action
             }
         }
 
-        // Action has finished executing. Choose next action.
+        // Choose next action. This is called at the end of every action.
         public void OnFinishedAction()
         {
             agent.ChooseAction(availableActions);
         }
 
+        // The DoEat action object will call this function to execute itself.
         public void DoEat(int time)
         {
-            move.MoveTo(Waypoint.WaypointType.FRIDGE); // waypoint we want to move to
-            StartCoroutine(EatCoroutine(time));
+            move.MoveTo(Waypoint.WaypointType.FRIDGE); // waypoint we want the agent to move to
+            StartCoroutine(EatCoroutine(time)); // Actually start the action
         }
 
         IEnumerator EatCoroutine(int time)
         {
-            ui.UpdateBestAction("Travelling: " + agent.chosenAction.name);
-            // wait until we have reached the hunting zone.
-            Vector3 destination = move.environmentController.FindWaypoint(Waypoint.WaypointType.FRIDGE).GetPosition();
+            Vector3 destination = GetWaypointDestination(Waypoint.WaypointType.FRIDGE);
             while(agent.transform.position != destination)
             {
                 yield return null;
             }
 
+            // Once we have reached the waypoint, update the UI to show the currently selected action.
             ui.UpdateBestAction(agent.chosenAction.Name);
-
+            // Counts down from the passed in time. Essentially controls how long the action takes.
             int counter = time;
             while (counter > 0)
             {
                 yield return new WaitForSeconds(1);
                 counter--;
             }
+            // Update stats to reflect how the action influences agent/environment
             stats.UpdateHunger(-100);
             stats.UpdateEnergy(-5);
-            // decide next action
-            OnFinishedAction();
+            OnFinishedAction(); // decide next action
         }
 
+        // The DoWashroom action object will call this function to execute itself.
         public void DoWashroom(int time)
         {
             move.MoveTo(Waypoint.WaypointType.TOILET); // waypoint we want to move to
@@ -81,50 +84,52 @@ namespace Core
 
         IEnumerator WashroomCoroutine(int time)
         {
-            ui.UpdateBestAction("Travelling: " + agent.chosenAction.name);
-            // wait until we have reached the hunting zone.
-            Vector3 destination = move.environmentController.FindWaypoint(Waypoint.WaypointType.TOILET).GetPosition();
+            Vector3 destination = GetWaypointDestination(Waypoint.WaypointType.TOILET);
+            // Once we have reached the waypoint, update the UI to show the currently selected action.
             while(agent.transform.position != destination)
             {
                 yield return null;
             }
+            // Once we have reached the waypoint, update the UI to show the currently selected action.
             ui.UpdateBestAction(agent.chosenAction.Name);
-
+            // Counts down from the passed in time. Essentially controls how long the action takes.
             int counter = time;
             while (counter > 0)
             {
                 yield return new WaitForSeconds(3);
                 counter--;
             }
+            // Update stats to reflect how the action influences agent/environment
             stats.UpdateBowels(-100);
-            // decide next action
-            DoWashHands(3);
+            // go and wash your hands. This is a special case, we are forcing a specific action to get selected.
+            // Another way to do this is to use "WashHands" as a normal action and just assign a high utility of washing your hands after going to the washroom.
+            ui.UpdateBestAction("Wash Hands");
+            DoWashHands(3); 
         }
-
 
         public void DoWashHands(int time)
         {
             move.MoveTo(Waypoint.WaypointType.SINK); // waypoint we want to move to
             StartCoroutine(WashHandsCoroutine(time));
         }
+
         IEnumerator WashHandsCoroutine(int time)
         {
-            ui.UpdateBestAction("Travelling: " + agent.chosenAction.name);
-            // wait until we have reached the hunting zone.
-            Vector3 destination = move.environmentController.FindWaypoint(Waypoint.WaypointType.SINK).GetPosition();
+            Vector3 destination = GetWaypointDestination(Waypoint.WaypointType.SINK);
             while(agent.transform.position != destination)
             {
                 yield return null;
             }
-            ui.UpdateBestAction("Wash Hands");
-
+            // Once we have reached the waypoint, update the UI to show the currently selected action.
+            // This is a special action, that follows right after the "Washroom" action.
+            // Counts down from the passed in time. Essentially controls how long the action takes.
             int counter = time;
             while (counter > 0)
             {
                 yield return new WaitForSeconds(1);
                 counter--;
             }
-            OnFinishedAction();
+            OnFinishedAction(); // decide a new action
         }
 
         public void DoWork(int time)
@@ -134,26 +139,25 @@ namespace Core
         }
         IEnumerator WorkCoroutine(int time)
         {
-            ui.UpdateBestAction("Travelling: " + agent.chosenAction.name);
-            // wait until we have reached the hunting zone.
-            Vector3 destination = move.environmentController.FindWaypoint(Waypoint.WaypointType.WORK).GetPosition();
+            Vector3 destination = GetWaypointDestination(Waypoint.WaypointType.WORK);
             while(agent.transform.position != destination)
             {
                 yield return null;
             }
+            // Once we have reached the waypoint, update the UI to show the currently selected action.
             ui.UpdateBestAction(agent.chosenAction.Name);
-
+            // Counts down from the passed in time. Essentially controls how long the action takes.
             int counter = time;
             while (counter > 0)
             {
                 yield return new WaitForSeconds(1);
                 counter--;
             }
+            // Update stats to reflect how the action influences agent/environment
             stats.UpdateEnergy(-30);
             stats.UpdateHunger(60);
             stats.UpdateStress(30);
-            // decide next action
-            OnFinishedAction();
+            OnFinishedAction();  // decide next action
         }
         
         public void DoWatchTV(int time)
@@ -164,14 +168,15 @@ namespace Core
 
         IEnumerator WatchTVCoroutine(int time)
         {
-            ui.UpdateBestAction("Travelling: " + agent.chosenAction.name +".");
-            // wait until we have reached the hunting zone.
-            Vector3 destination = move.environmentController.FindWaypoint(Waypoint.WaypointType.COUCH_WATCHTV).GetPosition();
+            Vector3 destination = GetWaypointDestination(Waypoint.WaypointType.COUCH_WATCHTV);
             while(agent.transform.position != destination)
             {
                 yield return null;
             }
+
+            // Once we have reached the waypoint, update the UI to show the currently selected action.
             ui.UpdateBestAction(agent.chosenAction.Name);
+            // Counts down from the passed in time. Essentially controls how long the action takes.
 
             int counter = time;
             while (counter > 0)
@@ -179,6 +184,7 @@ namespace Core
                 yield return new WaitForSeconds(1);
                 counter--;
             }
+            // Update stats to reflect how the action influences agent/environment
             stats.UpdateEnergy(-10);
             stats.UpdateHunger(5);
             stats.UpdateStress(-15);
@@ -195,29 +201,24 @@ namespace Core
 
         IEnumerator ReadCoroutine(int time)
         {
-            ui.UpdateBestAction("Travelling: " + agent.chosenAction.name);
-            // wait until we have reached the hunting zone.
-            Vector3 destination = move.environmentController.FindWaypoint(Waypoint.WaypointType.CHAIR).GetPosition();
+            Vector3 destination = GetWaypointDestination(Waypoint.WaypointType.CHAIR);
             while(agent.transform.position != destination)
             {
                 yield return null;
             }
+            // Once we have reached the waypoint, update the UI to show the currently selected action.
             ui.UpdateBestAction(agent.chosenAction.Name);
-
+            // Counts down from the passed in time. Essentially controls how long the action takes.
             int counter = time;
             while (counter > 0)
             {
                 yield return new WaitForSeconds(1);
                 counter--;
             }
-            // decide next action
-            OnFinishedAction();
-        }
-
-    
-        public void DoRelax(int time)
-        {
-            
+            stats.UpdateEnergy(15);
+            stats.UpdateHunger(10);
+            stats.UpdateStress(-20);
+            OnFinishedAction();             // decide next action
         }
 
         public void DoSleep(int time)
@@ -228,14 +229,14 @@ namespace Core
 
         IEnumerator SleepCoroutine(int time)
         {
-            ui.UpdateBestAction("Travelling: " + agent.chosenAction.name);
-            // wait until we have reached the hunting zone.
-            Vector3 destination = move.environmentController.FindWaypoint(Waypoint.WaypointType.BED).GetPosition();
+            Vector3 destination = GetWaypointDestination(Waypoint.WaypointType.BED);
             while(agent.transform.position != destination)
             {
                 yield return null;
             }
+            // Once we have reached the waypoint, update the UI to show the currently selected action.
             ui.UpdateBestAction(agent.chosenAction.Name);
+            // Counts down from the passed in time. Essentially controls how long the action takes.
 
             int counter = time;
             while (counter > 0)
@@ -243,9 +244,18 @@ namespace Core
                 yield return new WaitForSeconds(1);
                 counter--;
             }
+            // Update stats to reflect how the action influences agent/environment
             stats.UpdateEnergy(100);
             stats.UpdateHunger(30);
             OnFinishedAction();
+        }
+
+        // Fetch the action destination (each action has a waypoint, get get the waypoints' POS) 
+        // Update UI to travelling and wait until we have reached the desired waypoint.
+        private Vector3 GetWaypointDestination(Waypoint.WaypointType waypoint)
+        {
+            ui.UpdateBestAction("Travelling");
+            return move.environmentController.FindWaypoint(waypoint).GetPosition();
         }
     }
 }
