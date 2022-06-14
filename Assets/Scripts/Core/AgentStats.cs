@@ -6,9 +6,6 @@ namespace Core
 {
     public class AgentStats : MonoBehaviour
     {
-
-        [SerializeField] private float timeToDecreaseHunger = 5f; // every x seconds, decrease hunger
-        private float timeLeftHunger; // keep track of time to know when to decrease hunger
         [SerializeField]  private int _hunger;
         public int hunger
         {
@@ -66,7 +63,7 @@ namespace Core
             energy = Random.Range(0, 100);
             stress = Random.Range(0, 100);
             bowels = Random.Range(0, 100);
-            money  =  Random.Range(0, 100);
+            money  = 0;
         }
 
 
@@ -105,6 +102,45 @@ namespace Core
                 return;
             }
             stress += stressLevel;
+        }
+
+        public void UpdateMoney(int amount)
+        {
+            if(money + amount <= 0)
+            {
+                money = 0;
+                return;
+            }
+            money += amount;
+        }
+
+        // Control hunger increasing overtime
+        [SerializeField] private float timeToDecreaseHunger = 5f; // how many seconds to wait to decrease hunger
+        private float timeLeftHunger; // remaining time left until hunger should be decreased
+
+        public void UpdateHungerOvertime()
+        {
+            if (timeLeftHunger > 0)
+            {
+                timeLeftHunger -= Time.deltaTime;
+                return;
+            }
+            timeLeftHunger = timeToDecreaseHunger;
+            hunger += 3;
+        }
+
+        [SerializeField] private float timeToDecreaseRent= 12f; // how many seconds to wait
+        private float timeLeftRent; // remaining time left 
+        public void PayRent()
+        {
+            if (timeLeftRent > 0)
+            {
+                timeLeftRent -= Time.deltaTime;
+                return;
+            }
+            timeLeftRent = timeToDecreaseRent;
+            money -= 10;
+            if(money < 0) money = 0;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace UtilityAI.Considerations
         [SerializeField] private AnimationCurve responseCurve;
         public override float ScoreConsideration(AgentController agent)
         {
-            score = responseCurve.Evaluate(Mathf.Clamp01(agent.stats.bowels / 100f));
+            score = Mathf.Clamp01(Mathf.Log(agent.stats.bowels / 100f, 2) + 1);
             return score;
         }   
     }

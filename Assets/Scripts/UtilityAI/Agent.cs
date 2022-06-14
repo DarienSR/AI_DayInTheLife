@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Core;
+using UI;
 /* 
 
     This file contains all the decision logic for choosing and scoring actions.
@@ -14,11 +15,14 @@ namespace UtilityAI
         public bool finishedDecidingAction { get; set; } // when set to true it indicates an action has been chosen, will allow us to restart the process for choosing another action.
         public Action chosenAction { get; set; } // action with the highest utility and is currently being carried out
         private AgentController agentController; // holds all the agentController information, like movement, stats, etc.
+        
+        private UpdateAgentStatsUI ui { get; set; } // allow us to update the agents UI, which shows us agent/environmental stats and current action
 
         // Start is called before the first frame update
         void Start()
         {
             agentController = GetComponent<AgentController>();
+            ui = GameObject.Find("Agent").GetComponent<UpdateAgentStatsUI>(); // find the agent gameobject and then get the UI script attached to
         }
 
         // Update is called once per frame
@@ -43,7 +47,9 @@ namespace UtilityAI
             // set chosen action
             finishedDecidingAction = true;
             chosenAction = actions[actionIndex]; 
-            // TO DO: UPDATE AGENT UI PANEL TO INCLUDE CHOSEN ACTION
+            // set ui to show utility values of all actions
+            // ui.UpdateActionScores(actions);
+
         }
 
         // Iterate through all the actions consideration and score them. Average them together to get the overall action score, which is returned to be compared

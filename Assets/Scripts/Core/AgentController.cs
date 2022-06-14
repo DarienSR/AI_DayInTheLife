@@ -34,10 +34,14 @@ namespace Core
             if(agent.finishedDecidingAction)
             {
                 agent.finishedDecidingAction = false; // flag so we can execute the chosen action 
-                ui.UpdateStatsText(stats.energy, stats.hunger); // update UI with current stats 
                 agent.chosenAction.PerformAction(this); // execute the chosen action
             }
+            stats.UpdateHungerOvertime();
+            stats.PayRent();
         }
+
+        // Overtime take away energy, increase hunger, and the need to use the washroom
+
 
         // Choose next action. This is called at the end of every action.
         public void OnFinishedAction()
@@ -70,7 +74,7 @@ namespace Core
                 counter--;
             }
             // Update stats to reflect how the action influences agent/environment
-            stats.UpdateHunger(-100);
+            stats.UpdateHunger(-100); // take away all hunger
             stats.UpdateEnergy(-5);
             OnFinishedAction(); // decide next action
         }
@@ -103,7 +107,6 @@ namespace Core
             stats.UpdateBowels(-100);
             // go and wash your hands. This is a special case, we are forcing a specific action to get selected.
             // Another way to do this is to use "WashHands" as a normal action and just assign a high utility of washing your hands after going to the washroom.
-            ui.UpdateBestAction("Wash Hands");
             DoWashHands(3); 
         }
 
@@ -120,13 +123,14 @@ namespace Core
             {
                 yield return null;
             }
+            ui.UpdateBestAction("Wash Hands");
             // Once we have reached the waypoint, update the UI to show the currently selected action.
             // This is a special action, that follows right after the "Washroom" action.
             // Counts down from the passed in time. Essentially controls how long the action takes.
             int counter = time;
             while (counter > 0)
             {
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(1.5f);
                 counter--;
             }
             OnFinishedAction(); // decide a new action
@@ -154,9 +158,10 @@ namespace Core
                 counter--;
             }
             // Update stats to reflect how the action influences agent/environment
-            stats.UpdateEnergy(-30);
-            stats.UpdateHunger(60);
-            stats.UpdateStress(30);
+            stats.UpdateEnergy(30);
+            stats.UpdateHunger(20);
+            stats.UpdateStress(10);
+            stats.UpdateMoney(30);
             OnFinishedAction();  // decide next action
         }
         
@@ -185,7 +190,7 @@ namespace Core
                 counter--;
             }
             // Update stats to reflect how the action influences agent/environment
-            stats.UpdateEnergy(-10);
+            stats.UpdateEnergy(10);
             stats.UpdateHunger(5);
             stats.UpdateStress(-15);
             // decide next action
@@ -215,8 +220,8 @@ namespace Core
                 yield return new WaitForSeconds(1);
                 counter--;
             }
-            stats.UpdateEnergy(15);
-            stats.UpdateHunger(10);
+            stats.UpdateEnergy(5);
+            stats.UpdateHunger(5);
             stats.UpdateStress(-20);
             OnFinishedAction();             // decide next action
         }

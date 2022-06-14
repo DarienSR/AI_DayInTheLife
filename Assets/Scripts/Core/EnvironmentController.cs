@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Core;
+using UI;
 namespace Environment
 {
     public class EnvironmentController : MonoBehaviour
     {
         public List<Waypoint> waypoints;
         [SerializeField] public ParticleSystem rain;
+        private UpdateAgentStatsUI ui { get; set; } // allow us to update the agents UI, which shows us agent/environmental stats and current action
         private enum WeatherStates
         {
             Sunny,
@@ -28,6 +30,7 @@ namespace Environment
         void Awake()
         {
             waypoints = new List<Waypoint>();
+            ui = GameObject.Find("Agent").GetComponent<UpdateAgentStatsUI>(); // find the agent gameobject and then get the UI script attached to
         }
 
         public void AddWaypoint(Waypoint waypoint)
@@ -65,9 +68,15 @@ namespace Environment
                     currentWeather = currentWeather == WeatherStates.Sunny ? WeatherStates.Rainy : WeatherStates.Sunny;
                 }
                 if(currentWeather == WeatherStates.Rainy) 
+                {
                     rain.Play();
+                    ui.UpdateWeatherText("Raining");
+                }
                 else 
+                {
                     rain.Stop();
+                    ui.UpdateWeatherText("Sunny");
+                }
             }
         }
 
