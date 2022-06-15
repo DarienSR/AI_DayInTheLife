@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UtilityAI;
+
+/*
+    Updates the values on the agent UI 
+*/
+
 namespace UI 
 {
     public class UpdateAgentStatsUI : MonoBehaviour

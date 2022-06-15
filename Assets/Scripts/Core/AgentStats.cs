@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+    Holds all the agent stats and the methods to update them.
+*/
+
 namespace Core
 {
     public class AgentStats : MonoBehaviour
@@ -59,6 +63,7 @@ namespace Core
         // Initialize stats to starting values
         void Start()
         {
+            // Randomize the starting values of the stats
             hunger = Random.Range(0, 100);
             energy = Random.Range(0, 100);
             stress = Random.Range(0, 100);

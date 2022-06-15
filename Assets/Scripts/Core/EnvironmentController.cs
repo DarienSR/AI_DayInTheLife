@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Core;
 using UI;
+
+/*
+    The connection between the agent and the environment. References and holds information relating to waypoints and controls the weather.
+*/
+
 namespace Environment
 {
     public class EnvironmentController : MonoBehaviour

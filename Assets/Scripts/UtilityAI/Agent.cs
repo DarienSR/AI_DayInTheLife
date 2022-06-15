@@ -67,7 +67,6 @@ namespace UtilityAI
                 }
             }
             // average the overall score (normalizes actions despite having different number of considerations)
-            // TO DO: Explain the below process
             float originalScore = score; // probably can just use score variable
             float modFactor = 1 - (1 / action.considerations.Length);
             float makeUpValue = (1 - originalScore) * modFactor;

@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/* 
+    Control camera movement attached to the agent. 
+*/
+
 public class CameraMovement : MonoBehaviour
 {
     public Camera camera;

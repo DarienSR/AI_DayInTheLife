@@ -6,7 +6,7 @@ namespace Environment
 {
     public class Waypoint : MonoBehaviour
     {
-        public enum WaypointType 
+        public enum WaypointType // all of the waypoints in the scene
         {
             BED,
             CHAIR, // for reading
@@ -36,11 +36,6 @@ namespace Environment
         {
             // return the position of the waypoint, but set the Y value (waypoint height) to 1. This prevents the agent from moving off the ground towards the physical location of the waypoint. 
             return new Vector3(this.transform.position.x, 1f, this.transform.position.z);
-        }
-
-        public void SetWaypointColor()
-        {
-
         }
     }
 }
