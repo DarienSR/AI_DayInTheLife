@@ -4,17 +4,18 @@ using UnityEngine;
 using Core;
 namespace UtilityAI.actions
 {
-    [CreateAssetMenu(fileName = "WashHands", menuName = "UtilityAI/Actions/WashHands")]
-    public class WashHands : Action
+    [CreateAssetMenu(fileName = "Shower", menuName = "UtilityAI/Actions/Shower")]
+    public class Shower : Action
     {
-        public WashHands()
+        public Shower()
         {
-            Name = "WashHands";
+            Name = "Shower";
         }
 
         public override void PerformAction(AgentController agent)
         {
-            agent.DoWashHands(2);
+            agent.DoShower(2);
         }
     }
 }   
+

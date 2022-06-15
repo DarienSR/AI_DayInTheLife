@@ -13,7 +13,7 @@ namespace Core
     public class AgentMovement : MonoBehaviour
     {
         public GameObject environment;
-        float speed = 2f;
+        float speed = 5f;
         private Agent agent;
         private Vector3 newPos;
         public EnvironmentController environmentController; // gives access to all the waypoints on the map

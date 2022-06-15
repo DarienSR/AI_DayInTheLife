@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7a485a744f4f5e47b01465d3649e61f, type: 3}
   m_Name: Sleep
   m_EditorClassIdentifier: 
-  action: 
+  Name: Sleeping
   considerations:
-  - {fileID: 11400000, guid: d584990bcd0e2e943bc7287d3b6ff75d, type: 2}
+  - {fileID: 11400000, guid: 58e5ecfb31de7d14ca7ac22c3395daff, type: 2}

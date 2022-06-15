@@ -16,7 +16,7 @@ namespace Core
         public UpdateAgentStatsUI ui { get; set; } // allow us to update the agents UI, which shows us agent/environmental stats and current action
         public AgentMovement move { get; set; }
         public Action[] availableActions; // list of actions available to choose from
-
+        public EnvironmentController environment;
 
         void Start()
         {
@@ -24,6 +24,7 @@ namespace Core
             stats = GetComponent<AgentStats>();
             move = GetComponent<AgentMovement>();
             ui = GetComponent<UpdateAgentStatsUI>();
+            environment = GameObject.Find("Environment").GetComponent<EnvironmentController>();
         }
 
 
@@ -36,17 +37,88 @@ namespace Core
                 agent.finishedDecidingAction = false; // flag so we can execute the chosen action 
                 agent.chosenAction.PerformAction(this); // execute the chosen action
             }
+
+            // Overtime take away energy, increase hunger, and the need to use the washroom
             stats.UpdateHungerOvertime();
-            stats.PayRent();
         }
 
-        // Overtime take away energy, increase hunger, and the need to use the washroom
+
 
 
         // Choose next action. This is called at the end of every action.
         public void OnFinishedAction()
         {
             agent.ChooseAction(availableActions);
+        }
+
+
+        public void DoWorkout(int time)
+        {
+            StartCoroutine(WorkoutCoroutine(time)); // Actually start the action
+        }
+
+        IEnumerator WorkoutCoroutine(int time)
+        {
+            Vector3 destination;
+            if(environment.currentWeather == EnvironmentController.WeatherStates.Sunny)
+            {
+                move.MoveTo(Waypoint.WaypointType.JOG); // waypoint we want the agent to move to
+                destination = GetWaypointDestination(Waypoint.WaypointType.JOG);
+            }
+            else
+            {
+                 move.MoveTo(Waypoint.WaypointType.YOGA); // waypoint we want the agent to move to
+                destination = GetWaypointDestination(Waypoint.WaypointType.YOGA);
+            }
+
+            while(agent.transform.position != destination)
+            {
+                yield return null;
+            }
+
+            // Once we have reached the waypoint, update the UI to show the currently selected action.
+            ui.UpdateBestAction(agent.chosenAction.Name);
+            // Counts down from the passed in time. Essentially controls how long the action takes.
+            int counter = time;
+            while (counter > 0)
+            {
+                yield return new WaitForSeconds(1);
+                counter--;
+            }
+            // Update stats to reflect how the action influences agent/environment
+            stats.sweat += 60;
+            stats.stress -= 50;
+            stats.hunger += 30;
+            stats.lastExcercised = environment.currentDay;
+            OnFinishedAction(); // decide next action
+        }
+
+        public void DoShower(int time)
+        {
+            move.MoveTo(Waypoint.WaypointType.SHOWER); // waypoint we want the agent to move to
+            StartCoroutine(ShowerCoroutine(time)); // Actually start the action
+        }
+
+        IEnumerator ShowerCoroutine(int time)
+        {
+            Vector3 destination = GetWaypointDestination(Waypoint.WaypointType.SHOWER);
+            while(agent.transform.position != destination)
+            {
+                yield return null;
+            }
+
+            // Once we have reached the waypoint, update the UI to show the currently selected action.
+            ui.UpdateBestAction(agent.chosenAction.Name);
+            // Counts down from the passed in time. Essentially controls how long the action takes.
+            int counter = time;
+            while (counter > 0)
+            {
+                yield return new WaitForSeconds(1);
+                counter--;
+            }
+            // Update stats to reflect how the action influences agent/environment
+            stats.sweat -= 100;
+            OnFinishedAction(); // decide next action
         }
 
         // The DoEat action object will call this function to execute itself.
@@ -74,67 +146,10 @@ namespace Core
                 counter--;
             }
             // Update stats to reflect how the action influences agent/environment
-            stats.UpdateHunger(-100); // take away all hunger
-            stats.UpdateEnergy(-5);
+            stats.hunger -= 100;
             OnFinishedAction(); // decide next action
         }
 
-        // The DoWashroom action object will call this function to execute itself.
-        public void DoWashroom(int time)
-        {
-            move.MoveTo(Waypoint.WaypointType.TOILET); // waypoint we want to move to
-            StartCoroutine(WashroomCoroutine(time));
-        }
-
-        IEnumerator WashroomCoroutine(int time)
-        {
-            Vector3 destination = GetWaypointDestination(Waypoint.WaypointType.TOILET);
-            // Once we have reached the waypoint, update the UI to show the currently selected action.
-            while(agent.transform.position != destination)
-            {
-                yield return null;
-            }
-            // Once we have reached the waypoint, update the UI to show the currently selected action.
-            ui.UpdateBestAction(agent.chosenAction.Name);
-            // Counts down from the passed in time. Essentially controls how long the action takes.
-            int counter = time;
-            while (counter > 0)
-            {
-                yield return new WaitForSeconds(3);
-                counter--;
-            }
-            // Update stats to reflect how the action influences agent/environment
-            stats.UpdateBowels(-100);
-            // go and wash your hands. This is a special case, we are forcing a specific action to get selected.
-            // Another way to do this is to use "WashHands" as a normal action and just assign a high utility of washing your hands after going to the washroom.
-            DoWashHands(3); 
-        }
-
-        public void DoWashHands(int time)
-        {
-            move.MoveTo(Waypoint.WaypointType.SINK); // waypoint we want to move to
-            StartCoroutine(WashHandsCoroutine(time));
-        }
-
-        IEnumerator WashHandsCoroutine(int time)
-        {
-            Vector3 destination = GetWaypointDestination(Waypoint.WaypointType.SINK);
-            while(agent.transform.position != destination)
-            {
-                yield return null;
-            }
-            ui.UpdateBestAction("Wash Hands");
-            // Once we have reached the waypoint, update the UI to show the currently selected action.
-            // This is a special action, that follows right after the "Washroom" action.
-            // Counts down from the passed in time. Essentially controls how long the action takes.
-            int counter = time;
-            while (counter > 0)
-            {
-                yield return new WaitForSeconds(1.5f);
-                counter--;
-            }
-            OnFinishedAction(); // decide a new action
-        }
 
         public void DoWork(int time)
         {
@@ -158,45 +173,11 @@ namespace Core
                 counter--;
             }
             // Update stats to reflect how the action influences agent/environment
-            stats.UpdateEnergy(30);
-            stats.UpdateHunger(20);
-            stats.UpdateStress(10);
-            stats.UpdateMoney(30);
+            stats.stress += 30;
+            stats.money += 150;
             OnFinishedAction();  // decide next action
         }
         
-        public void DoWatchTV(int time)
-        {
-            move.MoveTo(Waypoint.WaypointType.COUCH_WATCHTV); // waypoint we want to move to
-            StartCoroutine(WatchTVCoroutine(time));
-        } 
-
-        IEnumerator WatchTVCoroutine(int time)
-        {
-            Vector3 destination = GetWaypointDestination(Waypoint.WaypointType.COUCH_WATCHTV);
-            while(agent.transform.position != destination)
-            {
-                yield return null;
-            }
-
-            // Once we have reached the waypoint, update the UI to show the currently selected action.
-            ui.UpdateBestAction(agent.chosenAction.Name);
-            // Counts down from the passed in time. Essentially controls how long the action takes.
-
-            int counter = time;
-            while (counter > 0)
-            {
-                yield return new WaitForSeconds(1);
-                counter--;
-            }
-            // Update stats to reflect how the action influences agent/environment
-            stats.UpdateEnergy(10);
-            stats.UpdateHunger(5);
-            stats.UpdateStress(-15);
-            // decide next action
-            OnFinishedAction();
-        }
-
 
         public void DoRead(int time)
         {
@@ -220,9 +201,7 @@ namespace Core
                 yield return new WaitForSeconds(1);
                 counter--;
             }
-            stats.UpdateEnergy(5);
-            stats.UpdateHunger(5);
-            stats.UpdateStress(-20);
+            stats.stress -= 20;
             OnFinishedAction();             // decide next action
         }
 
@@ -250,8 +229,10 @@ namespace Core
                 counter--;
             }
             // Update stats to reflect how the action influences agent/environment
-            stats.UpdateEnergy(100);
-            stats.UpdateHunger(30);
+            stats.stress -= 90;
+            stats.sweat += 75;
+            stats.hunger += 60;
+
             OnFinishedAction();
         }
 

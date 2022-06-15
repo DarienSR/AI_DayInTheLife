@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1050bdd44b67a84a8e7ccb8b89fa215, type: 3}
   m_Name: Eat
   m_EditorClassIdentifier: 
-  action: 
+  Name: Eat
   considerations:
-  - {fileID: 11400000, guid: 78955781e9e0f0d4badc0b91865301f9, type: 2}
+  - {fileID: 11400000, guid: 289396a00685c3e41896b596b1a6883b, type: 2}

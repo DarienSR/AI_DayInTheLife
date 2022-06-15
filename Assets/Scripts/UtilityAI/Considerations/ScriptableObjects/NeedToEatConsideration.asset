@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea33934738fc4584dbdc5fceecbf4f44, type: 3}
-  m_Name: Relax
+  m_Script: {fileID: 11500000, guid: b1aad37d3a8d18548829f0553c2584c0, type: 3}
+  m_Name: NeedToEatConsideration
   m_EditorClassIdentifier: 
-  Name: Relax
-  considerations:
-  - {fileID: 11400000, guid: d584990bcd0e2e943bc7287d3b6ff75d, type: 2}
+  consideration: 

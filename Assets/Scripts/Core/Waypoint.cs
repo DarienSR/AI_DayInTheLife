@@ -10,12 +10,11 @@ namespace Environment
         {
             BED,
             CHAIR, // for reading
-            TOILET,
-            SINK,
             FRIDGE,
-            COUCH_LAYDOWN,
-            COUCH_WATCHTV,
-            WORK
+            WORK,
+            JOG,
+            YOGA,
+            SHOWER
     
         }
 

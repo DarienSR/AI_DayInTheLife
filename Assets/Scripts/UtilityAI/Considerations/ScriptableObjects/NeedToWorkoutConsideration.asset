@@ -9,10 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c1514f1dd8a7e64cbef21b5cf8a7f39, type: 3}
-  m_Name: Work
+  m_Script: {fileID: 11500000, guid: afd0d5f236be77641a0e7f2693448f0e, type: 3}
+  m_Name: NeedToWorkoutConsideration
   m_EditorClassIdentifier: 
-  Name: Work
-  considerations:
-  - {fileID: 11400000, guid: 3acbf692a83894e469147b1b139735de, type: 2}
-  - {fileID: 11400000, guid: 4beb6c7c8c0034641b6150fb7211219e, type: 2}
+  consideration: 
