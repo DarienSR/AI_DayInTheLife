@@ -14,25 +14,32 @@ In order for the agents behavior to be accurate and believable, they must take i
 
 
 
-# TO DO: 
+# Utility AI Breakdown
 
 Here is a generalized breakdown of how the agent / environment stats get converted into considerations / actions:
 
 ​				*Note some information is abstracted. This is just a general flow.
 
-![image-20220615183811497](C:\Users\Darien\AppData\Roaming\Typora\typora-user-images\image-20220615183811497.png)
+![Utility AI breakdown](./images/flow.png)
 
 
 
 An example with numbers thrown in:
 
-![image-20220615184156569](C:\Users\Darien\AppData\Roaming\Typora\typora-user-images\image-20220615184156569.png)
+![Example of action/consideration flow](./images/examplewithnumbers.png)
 
 In the above case, the action "Read" would be selected because it's overall utility is higher.
 
 # Weather System
 The weather system is very basic, just transitioning between two states: Sunny and Rainy. I've implemented a Markov Model to handle transitions.
-![image-20220615015634092](C:\Users\Darien\AppData\Roaming\Typora\typora-user-images\image-20220615015634092.png)
 
-![image-20220615015843238](C:\Users\Darien\AppData\Roaming\Typora\typora-user-images\image-20220615015843238.png)
+Matrix:
+
+![Markov Model Matrix](./images/code.png)
+
+Diagram:
+
+![Markov Model of Weather System](./images/markov.png)
+
+
 
