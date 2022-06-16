@@ -28,18 +28,18 @@ An example with numbers thrown in:
 
 ![Example of action/consideration flow](./images/examplewithnumbers.png)
 
-In the above case, the action "Read" would be selected because it's overall utility is higher.
+In the above case, the action "Read" would be selected because it's overall utility is higher. In my case, Read is an idle action that occurs when no other actions utility is above 0.2.
 
-# Weather System
-The weather system is very basic, just transitioning between two states: Sunny and Rainy. I've implemented a Markov Model to handle transitions.
+# Demo Showcase
 
-Matrix:
-
-![Markov Model Matrix](./images/code.png)
-
-Diagram:
-
-![Markov Model of Weather System](./images/markov.png)
+https://youtu.be/hEt17SXyxNE
 
 
 
+# Lessons Learned
+
+The biggest lesson I learned throughout this project is the importance of planning and documentation. The theory of implementing Utility AI is pretty straight forward, but it is a lot harder to actually implement something that makes sense and works well together. When I just randomly played around with functions to score considerations, it always left me unsatisfied. After creating the above chart to depict all the stats, considerations, and actions, as well as how they all interact with each other it became a lot easier to see the bigger picture of how everything fits together.
+
+Prior to starting this project (the code portion) I also did a lot of research into how Utility AI works and the different architectures used to build it. This really did speed up development time and made development go a lot smoother compared to my other projects where I just jumped straight into coding.
+
+For future projects I will be sure to plan and diagram things out, as well as do research prior to implementation. 

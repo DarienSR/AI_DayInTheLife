@@ -121,7 +121,7 @@ namespace Environment
         private void Start()
         {
             StartCoroutine(DayCycle());
-            StartCoroutine(WeatherCycle(dayLength));
+          //  StartCoroutine(WeatherCycle(dayLength));
             StartCoroutine(RentCycle());
         }
     }

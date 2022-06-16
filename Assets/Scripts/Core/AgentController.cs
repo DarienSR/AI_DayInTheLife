@@ -54,23 +54,15 @@ namespace Core
 
         public void DoWorkout(int time)
         {
+            move.MoveTo(Waypoint.WaypointType.YOGA); // waypoint we want the agent to move to
             StartCoroutine(WorkoutCoroutine(time)); // Actually start the action
         }
 
+
         IEnumerator WorkoutCoroutine(int time)
         {
-            Vector3 destination;
-            if(environment.currentWeather == EnvironmentController.WeatherStates.Sunny)
-            {
-                move.MoveTo(Waypoint.WaypointType.JOG); // waypoint we want the agent to move to
-                destination = GetWaypointDestination(Waypoint.WaypointType.JOG);
-            }
-            else
-            {
-                 move.MoveTo(Waypoint.WaypointType.YOGA); // waypoint we want the agent to move to
-                destination = GetWaypointDestination(Waypoint.WaypointType.YOGA);
-            }
-
+            Vector3 destination = GetWaypointDestination(Waypoint.WaypointType.YOGA);
+            
             while(agent.transform.position != destination)
             {
                 yield return null;
