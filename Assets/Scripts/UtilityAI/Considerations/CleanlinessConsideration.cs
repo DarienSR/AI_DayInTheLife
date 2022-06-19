@@ -9,7 +9,7 @@ namespace UtilityAI.Considerations
     {
         public override float ScoreConsideration(AgentController agent)
         {
-            score = Mathf.Clamp01(agent.stats.sweat / 100);
+            score = agent.stats.sweat / 100;
             return score;
         }   
     }

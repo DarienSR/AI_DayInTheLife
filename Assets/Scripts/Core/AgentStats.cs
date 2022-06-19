@@ -10,8 +10,8 @@ namespace Core
 {
     public class AgentStats : MonoBehaviour
     {
-        [SerializeField]  private int _hunger;
-        public int hunger
+        [SerializeField]  private float _hunger;
+        public float hunger
         {
             get {  return _hunger; }
             set 
@@ -20,8 +20,8 @@ namespace Core
             }
         }
 
-        [SerializeField] private int _money;
-        public int money
+        [SerializeField] private float _money;
+        public float money
         {
             get { return _money; }
             set
@@ -30,8 +30,8 @@ namespace Core
             }
         }
 
-        [SerializeField] private int _sweat;
-        public int sweat
+        [SerializeField] private float _sweat;
+        public float sweat
         {
             get { return _sweat; }
             set 
@@ -40,8 +40,8 @@ namespace Core
             }
         }
 
-        [SerializeField] private int _stress;
-        public int stress
+        [SerializeField] private float _stress;
+        public float stress
         {
             get { return _stress; }
             set 
@@ -49,6 +49,18 @@ namespace Core
                 _stress = Mathf.Clamp(value, 0, 100); // restrict value between 0 and 100
             }
         }
+
+        // control agent sleeping
+        [SerializeField] private float _tiredness;
+        public float tiredness
+        {
+            get { return _tiredness; }
+            set 
+            {
+                _tiredness = Mathf.Clamp(value, 0, 100); // restrict value between 0 and 100
+            }
+        }
+
 
         [SerializeField] private int _lastExcercised;
         public int lastExcercised = 1;
@@ -66,6 +78,20 @@ namespace Core
             }
             timeLeftHunger = timeToDecreaseHunger;
             hunger += 13;
+        }
+
+
+        [SerializeField] private float timeToIncreaseTiredness = 10f; // how many seconds to wait to decrease hunger
+        private float timeLeftTiredness; // remaining time left until hunger should be decreased
+        public void UpdateTirednessOvertime()
+        {
+            if (timeLeftTiredness > 0)
+            {
+                timeLeftTiredness -= Time.deltaTime;
+                return;
+            }
+            timeLeftTiredness = timeToIncreaseTiredness;
+            tiredness += Random.Range(20, 30); // add a random value between 20 and 30 every 5 seconds to determine how tired the agent is
         }
 
         void Start()

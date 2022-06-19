@@ -10,7 +10,7 @@ namespace UtilityAI.Considerations
     {
         public override float ScoreConsideration(AgentController agent)
         {
-            score = Mathf.Clamp01(agent.environment.timeOfDay / agent.environment.dayLength);
+            score = agent.stats.tiredness / 100f;
             return score;
         }   
     }

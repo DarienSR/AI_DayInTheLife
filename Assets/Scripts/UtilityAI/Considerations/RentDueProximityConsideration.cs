@@ -10,7 +10,7 @@ namespace UtilityAI.Considerations
     {
         public override float ScoreConsideration(AgentController agent)
         {
-            score = Mathf.Clamp01(1 - agent.environment.daysTillRentDue / agent.environment.rentDue);
+            score = 1 - (agent.environment.daysTillRentDue / agent.environment.rentDue);
             return score;
         }   
     }

@@ -28,7 +28,11 @@ namespace UtilityAI
         // Update is called once per frame
         void Update()
         {
-            if(chosenAction is null) ChooseAction(agentController.availableActions); // begins process of choosing an action
+            if(chosenAction is null)
+            {
+                ChooseAction(agentController.availableActions); // begins process of choosing an action
+            }
+            
         }
 
         // Iterate through all the available actions and return the action with the highest utility 
@@ -48,7 +52,7 @@ namespace UtilityAI
             finishedDecidingAction = true;
             chosenAction = actions[actionIndex]; 
             // set ui to show utility values of all actions
-            // ui.UpdateActionScores(actions);
+            ui.UpdateActionScores(actions, agentController.stats.money.ToString());
 
         }
 

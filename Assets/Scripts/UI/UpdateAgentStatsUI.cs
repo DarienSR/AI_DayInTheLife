@@ -21,7 +21,7 @@ namespace UI
         {
 
         }
-        public void UpdateActionScores(Action[] actions)
+        public void UpdateActionScores(Action[] actions, string money)
         {
             string text = "";
             foreach(Action action in actions)
@@ -29,6 +29,7 @@ namespace UI
                 if(action is null) break;
                 text += action.Name + ": " + action.score + "\n"; 
             }
+            text += "Money: $" + money;
             actionScores.text = text;
         }
 

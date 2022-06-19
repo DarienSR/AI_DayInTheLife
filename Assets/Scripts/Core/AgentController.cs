@@ -38,8 +38,9 @@ namespace Core
                 agent.chosenAction.PerformAction(this); // execute the chosen action
             }
 
-            // Overtime take away energy, increase hunger, and the need to use the washroom
+            // Overtime increase hunger
             stats.UpdateHungerOvertime();
+            stats.UpdateTirednessOvertime(); // update how tired the agent is overtime
         }
 
 
@@ -78,9 +79,9 @@ namespace Core
                 counter--;
             }
             // Update stats to reflect how the action influences agent/environment
-            stats.sweat += 60;
-            stats.stress -= 50;
-            stats.hunger += 30;
+            stats.sweat += Random.Range(40, 73);
+            stats.stress -= Random.Range(34, 70);
+            stats.hunger += Random.Range(31, 60);
             stats.lastExcercised = environment.currentDay;
             OnFinishedAction(); // decide next action
         }
@@ -138,7 +139,7 @@ namespace Core
                 counter--;
             }
             // Update stats to reflect how the action influences agent/environment
-            stats.hunger -= 100;
+            stats.hunger -= Random.Range(90, 100);
             OnFinishedAction(); // decide next action
         }
 
@@ -165,8 +166,8 @@ namespace Core
                 counter--;
             }
             // Update stats to reflect how the action influences agent/environment
-            stats.stress += 30;
-            stats.money += 150;
+            stats.stress += Random.Range(22, 40);
+            stats.money += Random.Range(120, 200);
             OnFinishedAction();  // decide next action
         }
         
@@ -193,7 +194,7 @@ namespace Core
                 yield return new WaitForSeconds(1);
                 counter--;
             }
-            stats.stress -= 20;
+            stats.stress -= Random.Range(17, 35);
             OnFinishedAction();             // decide next action
         }
 
@@ -221,9 +222,9 @@ namespace Core
                 counter--;
             }
             // Update stats to reflect how the action influences agent/environment
-            stats.stress -= 90;
-            stats.sweat += 75;
-            stats.hunger += 60;
+            stats.stress -= Random.Range(80, 86);
+            stats.sweat += Random.Range(60, 78);
+            stats.hunger += Random.Range(50, 59);
 
             OnFinishedAction();
         }
