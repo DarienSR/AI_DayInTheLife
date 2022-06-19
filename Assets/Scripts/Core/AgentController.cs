@@ -79,9 +79,9 @@ namespace Core
                 counter--;
             }
             // Update stats to reflect how the action influences agent/environment
-            stats.sweat += Random.Range(40, 73);
-            stats.stress -= Random.Range(34, 70);
-            stats.hunger += Random.Range(31, 60);
+            stats.sweat += Random.Range(25, 73);
+            stats.stress -= Random.Range(14, 70);
+            stats.hunger += Random.Range(20, 30);
             stats.lastExcercised = environment.currentDay;
             OnFinishedAction(); // decide next action
         }
@@ -167,7 +167,7 @@ namespace Core
             }
             // Update stats to reflect how the action influences agent/environment
             stats.stress += Random.Range(22, 40);
-            stats.money += Random.Range(120, 200);
+            stats.money += Random.Range(150, 500);
             OnFinishedAction();  // decide next action
         }
         
@@ -225,7 +225,7 @@ namespace Core
             stats.stress -= Random.Range(80, 86);
             stats.sweat += Random.Range(60, 78);
             stats.hunger += Random.Range(50, 59);
-
+            stats.tiredness -= 100;
             OnFinishedAction();
         }
 

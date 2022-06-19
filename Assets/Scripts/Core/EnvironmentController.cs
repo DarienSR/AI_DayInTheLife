@@ -25,7 +25,7 @@ namespace Environment
         public int dayLength = 24; 
         public int currentDay = 1; // every 24 seconds (value of dayLength), currentDay should be incremented. 
         public int daysTillRentDue = 4;
-        public int rentDue = 4; // rent due every 4 days
+        public int rentDue = 6; // rent due every 4 days
         
         public int rentAmount = 300; // rent amount per 4 days
         public int timeOfDay = 1;

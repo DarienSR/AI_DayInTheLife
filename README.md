@@ -1,6 +1,5 @@
 # Determining Agent Behavior with Utility Functions
-The point of this project was to understand how Utility AI works. I have placed an Agent (or NPC) in a scene (his apartment) and used Utility AI to model his behavior. 
-Performing different actions around his apartment like sleeping, eating, or watching tv. 
+The point of this project was to understand how Utility AI works. I have placed an Agent (or NPC) in a scene (his apartment) and used Utility AI to model his behavior. Performing different actions around his apartment like sleeping, eating, or working. 
 
 # How does Utility AI work?
 In it's simplest form numerous actions like "Eating" are defined by it's various considerations (i.e. Am I hungry? Do I have food?, etc). All actions and their considerations are then scored based on the utility (or value) they provided to the agent in that given time (calculations must be done during run-time). The action that provides the most value/utility is then selected.
@@ -32,9 +31,15 @@ In the above case, the action "Read" would be selected because it's overall util
 
 # Demo Showcase
 
-https://youtu.be/hEt17SXyxNE
+https://youtu.be/STuv8y2j9Ik
 
+**Possible changes to make it more realistic:** 
 
+Fine tuning the balance of the actions and tuning the consideration functions.
+
+**Prioritization of actions** - If work = 98 and shower = 1, we should prioritize work because it is more important. If there were consequences in this simulation, like if you were not to have enough money to pay rent you would get evicted. Then the value of earning money far exceeds that of taking a shower. This could be factored into the utility scoring, or there could be some sort of action hierarchy where above a threshold actions with higher precedence take over.
+
+ **Action cooldowns -** Once an action is completed there is a small cooldown until you can perform that action again. I think it would make more sense if the simulation had a more accurate time/day cycle and more actions to choose from. 
 
 # Lessons Learned
 
